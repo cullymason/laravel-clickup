@@ -6,8 +6,6 @@ use Spinen\ClickUp\Support\Model;
 
 /**
  * Class ChildOf
- *
- * @package Spinen\ClickUp\Support\Relations
  */
 class ChildOf extends BelongsTo
 {

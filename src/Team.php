@@ -12,7 +12,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class Team
  *
- * @package Spinen\ClickUp
  *
  * @property Collection $goals
  * @property Collection $members
@@ -22,11 +21,10 @@ use Spinen\ClickUp\Support\Relations\HasMany;
  * @property Collection $taskTemplates
  * @property Collection $views
  * @property Collection $webhooks
- * @property integer $id
+ * @property int $id
  * @property string $avatar
  * @property string $color
  * @property string $name
- *
  */
 class Team extends Model
 {
@@ -49,9 +47,9 @@ class Team extends Model
     /**
      * Accessor for Members.
      *
-     * @param array $members
-     *
+     * @param  array  $members
      * @return Collection
+     *
      * @throws NoClientException
      */
     public function getMembersAttribute(array $members): Collection
@@ -61,6 +59,7 @@ class Team extends Model
 
     /**
      * @return HasMany
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -72,6 +71,7 @@ class Team extends Model
 
     /**
      * @return HasMany
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -83,6 +83,7 @@ class Team extends Model
 
     /**
      * @return HasMany
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -94,6 +95,7 @@ class Team extends Model
 
     /**
      * @return HasMany
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -105,6 +107,7 @@ class Team extends Model
 
     /**
      * @return HasMany
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -116,6 +119,7 @@ class Team extends Model
 
     /**
      * @return HasMany
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -127,6 +131,7 @@ class Team extends Model
 
     /**
      * @return HasMany
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

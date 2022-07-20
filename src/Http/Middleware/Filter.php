@@ -10,8 +10,6 @@ use Spinen\ClickUp\Api\Client as ClickUp;
 
 /**
  * Class Filter
- *
- * @package Spinen\ClickUp\Http\Middleware
  */
 class Filter
 {
@@ -39,9 +37,9 @@ class Filter
     /**
      * Create a new ClickUp filter middleware instance.
      *
-     * @param ClickUp $clickup
-     * @param Redirector $redirector
-     * @param UrlGenerator $url_generator
+     * @param  ClickUp  $clickup
+     * @param  Redirector  $redirector
+     * @param  UrlGenerator  $url_generator
      */
     public function __construct(ClickUp $clickup, Redirector $redirector, UrlGenerator $url_generator)
     {
@@ -53,14 +51,13 @@ class Filter
     /**
      * Handle an incoming request.
      *
-     * @param Request $request Request
-     * @param Closure $next Closure
-     *
+     * @param  Request  $request Request
+     * @param  Closure  $next Closure
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->user()->clickup_token) {
+        if (! $request->user()->clickup_token) {
             // Set intended route, so that after linking account, user is put where they were going
             $this->redirector->setIntendedUrl($request->path());
 

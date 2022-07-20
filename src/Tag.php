@@ -11,7 +11,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Tag
  *
- * @package Spinen\ClickUp
  *
  * @property string $name
  * @property string $tag_fg
@@ -39,6 +38,7 @@ class Tag extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

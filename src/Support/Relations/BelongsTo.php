@@ -11,8 +11,6 @@ use Spinen\ClickUp\Support\Model;
 
 /**
  * Class BelongsTo
- *
- * @package Spinen\ClickUp\Support\Relations
  */
 class BelongsTo extends Relation
 {
@@ -31,11 +29,11 @@ class BelongsTo extends Relation
     /**
      * Create a new belongs to relationship instance.
      *
-     * @param Builder $builder
-     * @param Model $child
-     * @param string $foreignKey
-     *
+     * @param  Builder  $builder
+     * @param  Model  $child
+     * @param  string  $foreignKey
      * @return void
+     *
      * @throws InvalidRelationshipException
      */
     public function __construct(Builder $builder, Model $child, $foreignKey)
@@ -63,7 +61,7 @@ class BelongsTo extends Relation
     /**
      * Get the foreign key's name
      *
-     * @return integer|string
+     * @return int|string
      */
     public function getForeignKey()
     {
@@ -84,6 +82,7 @@ class BelongsTo extends Relation
      * Get the results of the relationship.
      *
      * @return Model|null
+     *
      * @throws GuzzleException
      * @throws InvalidRelationshipException
      * @throws NoClientException
@@ -91,7 +90,7 @@ class BelongsTo extends Relation
      */
     public function getResults(): ?Model
     {
-        if (!$this->getForeignKey()) {
+        if (! $this->getForeignKey()) {
             return null;
         }
 

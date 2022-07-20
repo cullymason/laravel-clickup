@@ -12,14 +12,13 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Webhook
  *
- * @package Spinen\ClickUp
  *
  * @property array $events
- * @property integer $folder_id
- * @property integer $list_id
- * @property integer $space_id
- * @property integer $team_id
- * @property integer $userid
+ * @property int $folder_id
+ * @property int $list_id
+ * @property int $space_id
+ * @property int $team_id
+ * @property int $userid
  * @property string $id
  */
 class Webhook extends Model
@@ -31,11 +30,11 @@ class Webhook extends Model
      */
     protected $casts = [
         'folder_id' => 'integer',
-        'id'        => 'string',
-        'list_id'   => 'integer',
-        'space_id'  => 'integer',
-        'team_id'   => 'integer',
-        'userid'    => 'integer',
+        'id' => 'string',
+        'list_id' => 'integer',
+        'space_id' => 'integer',
+        'team_id' => 'integer',
+        'userid' => 'integer',
     ];
 
     /**
@@ -48,6 +47,7 @@ class Webhook extends Model
     /**
      * @return BelongsTo
 
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -59,6 +59,7 @@ class Webhook extends Model
 
     /**
      * @return BelongsTo
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -70,6 +71,7 @@ class Webhook extends Model
 
     /**
      * @return BelongsTo
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -81,6 +83,7 @@ class Webhook extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -92,6 +95,7 @@ class Webhook extends Model
 
     /**
      * @return BelongsTo
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

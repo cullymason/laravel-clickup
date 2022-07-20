@@ -29,8 +29,6 @@ use Spinen\ClickUp\Support\Relations\Relation;
 
 /**
  * Class Model
- *
- * @package Spinen\ClickUp\Support
  */
 abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
 {
@@ -74,7 +72,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Optional parentModel instance
      *
-     * @var Model $parentModel
+     * @var Model
      */
     public $parentModel;
 
@@ -123,7 +121,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Are timestamps in milliseconds?
      *
-     * @var boolean
+     * @var bool
      */
     protected $timestampsInMilliseconds = true;
 
@@ -144,8 +142,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Model constructor.
      *
-     * @param array|null $attributes
-     * @param Model|null $parentModel
+     * @param  array|null  $attributes
+     * @param  Model|null  $parentModel
      */
     public function __construct(array $attributes = [], Model $parentModel = null)
     {
@@ -163,8 +161,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Dynamically retrieve attributes on the model.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function __get($key)
@@ -175,8 +172,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Determine if an attribute or relation exists on the model.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     public function __isset($key)
@@ -187,10 +183,10 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Dynamically set attributes on the model.
      *
-     * @param string $key
-     * @param mixed $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return void
+     *
      * @throws ModelReadonlyException
      */
     public function __set($key, $value)
@@ -215,8 +211,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Unset an attribute on the model.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return void
      */
     public function __unset($key)
@@ -242,22 +237,21 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Assume foreign key
      *
-     * @param string $related
-     *
+     * @param  string  $related
      * @return string
      */
     protected function assumeForeignKey($related): string
     {
-        return Str::snake((new $related())->getResponseKey()) . '_id';
+        return Str::snake((new $related())->getResponseKey()).'_id';
     }
 
     /**
      * Relationship that makes the model belongs to another model
      *
-     * @param string $related
-     * @param string|null $foreignKey
-     *
+     * @param  string  $related
+     * @param  string|null  $foreignKey
      * @return BelongsTo
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -275,10 +269,10 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Relationship that makes the model child to another model
      *
-     * @param string $related
-     * @param string|null $foreignKey
-     *
+     * @param  string  $related
+     * @param  string|null  $foreignKey
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -297,7 +291,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Delete the model from ClickUp
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws NoClientException
      * @throws TokenException
      */
@@ -323,8 +318,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Fill the model with the supplied properties
      *
-     * @param array $attributes
-     *
+     * @param  array  $attributes
      * @return $this
      */
     public function fill(array $attributes = []): self
@@ -381,9 +375,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      *
      * Put anything on the end of the URI that is passed in
      *
-     * @param string|null $extra
-     * @param array|null $query
-     *
+     * @param  string|null  $extra
+     * @param  array|null  $query
      * @return string
      */
     public function getPath($extra = null, array $query = []): ?string
@@ -393,21 +386,21 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
         // If have an id, then put it on the end
         if ($this->getKey()) {
-            $path .= '/' . $this->getKey();
+            $path .= '/'.$this->getKey();
         }
 
         // Stick any extra things on the end
-        if (!is_null($extra)) {
-            $path .= '/' . ltrim($extra, '/');
+        if (! is_null($extra)) {
+            $path .= '/'.ltrim($extra, '/');
         }
 
         // Convert query to querystring format and put on the end
-        if (!empty($query)) {
-            $path .= '?' . http_build_query($query);
+        if (! empty($query)) {
+            $path .= '?'.http_build_query($query);
         }
 
         // If there is a parentModel & not have an id (unless for nested), then prepend parentModel
-        if (!is_null($this->parentModel) && (!$this->getKey() || $this->isNested())) {
+        if (! is_null($this->parentModel) && (! $this->getKey() || $this->isNested())) {
             return $this->parentModel->getPath($path);
         }
 
@@ -417,8 +410,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Get a relationship value from a method.
      *
-     * @param string $method
-     *
+     * @param  string  $method
      * @return mixed
      *
      * @throws LogicException
@@ -427,7 +419,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     {
         $relation = $this->{$method}();
 
-        if (!$relation instanceof Relation) {
+        if (! $relation instanceof Relation) {
             $exception_message = is_null($relation)
                 ? '%s::%s must return a relationship instance, but "null" was returned. Was the "return" keyword used?'
                 : '%s::%s must return a relationship instance.';
@@ -472,11 +464,11 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Many of the results include collection of related data, so cast it
      *
-     * @param string $related
-     * @param array $given
-     * @param bool $reset Some of the values are nested under a property, so peel it off
-     *
+     * @param  string  $related
+     * @param  array  $given
+     * @param  bool  $reset Some of the values are nested under a property, so peel it off
      * @return Collection
+     *
      * @throws NoClientException
      */
     public function givenMany($related, $given, $reset = false): Collection
@@ -494,11 +486,11 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Many of the results include related data, so cast it to object
      *
-     * @param string $related
-     * @param array $attributes
-     * @param bool $reset Some of the values are nested under a property, so peel it off
-     *
+     * @param  string  $related
+     * @param  array  $attributes
+     * @param  bool  $reset Some of the values are nested under a property, so peel it off
      * @return Model
+     *
      * @throws NoClientException
      */
     public function givenOne($related, $attributes, $reset = false): Model
@@ -510,9 +502,9 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Relationship that makes the model have a collection of another model
      *
-     * @param string $related
-     *
+     * @param  string  $related
      * @return HasMany
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -549,15 +541,14 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Create a new model instance that is existing.
      *
-     * @param array $attributes
-     *
+     * @param  array  $attributes
      * @return static
      */
     public function newFromBuilder($attributes = []): self
     {
         $model = $this->newInstance([], true);
 
-        $model->setRawAttributes((array)$attributes, true);
+        $model->setRawAttributes((array) $attributes, true);
 
         return $model;
     }
@@ -568,9 +559,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * Provides a convenient way for us to generate fresh model instances of this current model.
      * It is particularly useful during the hydration of new objects via the builder.
      *
-     * @param array $attributes
-     * @param bool $exists
-     *
+     * @param  array  $attributes
+     * @param  bool  $exists
      * @return static
      */
     public function newInstance(array $attributes = [], $exists = false): self
@@ -585,20 +575,18 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Determine if the given attribute exists.
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return bool
      */
     public function offsetExists($offset)
     {
-        return !is_null($this->getAttribute($offset));
+        return ! is_null($this->getAttribute($offset));
     }
 
     /**
      * Get the value for a given offset.
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return mixed
      */
     public function offsetGet($offset)
@@ -609,10 +597,10 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Set the value for a given offset.
      *
-     * @param mixed $offset
-     * @param mixed $value
-     *
+     * @param  mixed  $offset
+     * @param  mixed  $value
      * @return void
+     *
      * @throws ModelReadonlyException
      */
     public function offsetSet($offset, $value): void
@@ -627,8 +615,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Unset the value for a given offset.
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return void
      */
     public function offsetUnset($offset): void
@@ -639,8 +626,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Determine if the given relation is loaded.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     public function relationLoaded($key): bool
@@ -652,6 +638,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * Save the model in ClickUp
      *
      * @return bool
+     *
      * @throws NoClientException
      * @throws TokenException
      */
@@ -663,7 +650,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         }
 
         try {
-            if (!$this->isDirty()) {
+            if (! $this->isDirty()) {
                 return true;
             }
 
@@ -690,7 +677,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             $this->setRawAttributes($response, true);
 
             return true;
-
         } catch (GuzzleException $e) {
             // TODO: Do something with the error
 
@@ -702,25 +688,24 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * Save the model in ClickUp, but raise error if fail
      *
      * @return bool
+     *
      * @throws NoClientException
      * @throws TokenException
      * @throws UnableToSaveException
      */
     public function saveOrFail(): bool
     {
-        if (!$this->save()) {
+        if (! $this->save()) {
             throw new UnableToSaveException();
         }
 
         return true;
     }
 
-
     /**
      * Set the readonly
      *
-     * @param bool $readonly
-     *
+     * @param  bool  $readonly
      * @return $this
      */
     public function setReadonly($readonly = true): self
@@ -733,9 +718,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Set the given relationship on the model.
      *
-     * @param string $relation
-     * @param mixed $value
-     *
+     * @param  string  $relation
+     * @param  mixed  $value
      * @return $this
      */
     public function setRelation($relation, $value): self
@@ -758,8 +742,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Convert the model instance to JSON.
      *
-     * @param int $options
-     *
+     * @param  int  $options
      * @return string
      *
      * @throws JsonEncodingException

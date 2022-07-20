@@ -10,8 +10,6 @@ use Spinen\ClickUp\Support\Collection;
 
 /**
  * Class HasMany
- *
- * @package Spinen\ClickUp\Support\Relations
  */
 class HasMany extends Relation
 {
@@ -19,6 +17,7 @@ class HasMany extends Relation
      * Get the results of the relationship.
      *
      * @return Collection
+     *
      * @throws GuzzleException
      * @throws InvalidRelationshipException
      * @throws NoClientException

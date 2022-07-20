@@ -12,10 +12,9 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Time
  *
- * @package Spinen\ClickUp
  *
  * @property Collection $intervals
- * @property integer $time
+ * @property int $time
  * @property Member $user
  * @property Task $task
  */
@@ -47,9 +46,9 @@ class Time extends Model
     /**
      * Accessor for Intervals.
      *
-     * @param array $intervals
-     *
+     * @param  array  $intervals
      * @return Collection
+     *
      * @throws NoClientException
      */
     public function getIntervalsAttribute(array $intervals): Collection
@@ -60,9 +59,9 @@ class Time extends Model
     /**
      * Accessor for User.
      *
-     * @param array $user
-     *
+     * @param  array  $user
      * @return Member
+     *
      * @throws NoClientException
      */
     public function getUserAttribute($user): Member
@@ -72,6 +71,7 @@ class Time extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
